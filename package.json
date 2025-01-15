@@ -9,6 +9,7 @@
   },
   "license": "CC-BY-NC-4.0",
   "dependencies": {
+    "canvas": "^3.0.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"
   },
