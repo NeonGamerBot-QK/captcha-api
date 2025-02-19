@@ -16,7 +16,7 @@ export function genCanvas(word) {
     if (index % 2 === 0) return;
     ctx.font = `${30 + Math.round(Math.random() * 5)}px OpenDyslexic`;
     ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-    console.log(l);
+    // console.log(l);
     ctx.fillText(l, 30 + index * 20, 100);
   });
   ctx.globalAlpha = 1.0;
@@ -51,7 +51,7 @@ export function genCanvas(word) {
   letters.forEach((l, index) => {
     if (index % 2 !== 0) return;
     ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-    console.log(l);
+    // console.log(l);
     ctx.fillText(l, 30 + index * 20, 100);
   });
   const stream = canvas.toBuffer();

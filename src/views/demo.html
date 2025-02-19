@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha api</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            color: white;
+            background-color: #111;
+
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <center>
+            <h1>Amazing Captcha Demo</h1>
+            <form>
+                <img src="" alt="Captcha " id="captcha_img" />
+                <div>
+                    <label for="captcha">Solve captcha: (click enter once done)</label>
+                    <input type="text" name="captcha" id="captcha">
+                </div>
+            </form>
+            <br>
+            <hr>
+            <br>
+            <img src="/example" />
+            <img src="/example-math" alt="" srcset="">
+        </center>
+    </main>
+    <script>
+        ; (async () => {
+            const { id } = await fetch("/captcha").then((res) => res.json());
+            const form = document.querySelector("form");
+            const img = document.querySelector("#captcha_img");
+            img.src = `/captcha/${id}/render`;
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                const res = await fetch(`/captcha/${id}/solve`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        text: formData.get("captcha"),
+                    }),
+                });
+                const data = await res.json();
+                console.log(data);
+            });
+        })()
+    </script>
+</body>
+
+</html>
