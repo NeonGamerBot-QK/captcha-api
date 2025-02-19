@@ -29,11 +29,19 @@ app.get("/", (req, res) => {
     status: 200,
   });
 });
+
 app.get("/example", async (req, res) => {
   res.set({ "Content-Type": "image/png" });
   const img = await genCanvas("example");
   res.end(img);
 });
+
+app.get("/example-math", async (req, res) => {
+  res.set({ "Content-Type": "image/png" });
+  const img = await genCanvas("1 + 1");
+  res.end(img);
+});
+
 app.get("/example-gen-text", (req, res) => {
   res.json({ text: genHardCaptcha() });
 });
@@ -45,6 +53,7 @@ app.get("/captcha/:id/render", async (req, res) => {
   const img = await genCanvas(code);
   res.end(img);
 });
+
 app.post("/captcha/:id/solve", (req, res) => {
   const d = cached.get(Number(req.params.id));
   if (!d) return res.json({ message: `Invalid ID`, status: 400 });
@@ -52,9 +61,10 @@ app.post("/captcha/:id/solve", (req, res) => {
     res.json({ message: `Correct`, status: 200 });
     cached.delete(Number(req.params.id));
   } else {
-    res.json({ message: `Incorrect`, status: 400 });
+    res.status(400).json({ message: `Incorrect`, status: 400 });
   }
 });
+
 app.post("/captcha", async (req, res) => {
   const id = cached.size;
   cached.set(id, {
