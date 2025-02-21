@@ -7,7 +7,11 @@ import { genHardCaptcha } from "./utils.js";
 import { join } from "path";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const app = express();
 let cached = new Map();
 app.use(express.json());
@@ -22,7 +26,7 @@ const swaggerOptions = {
     },
   },
   // Path to the API docs
-  apis: [import.meta.dirname + "/index.js"], // specify the file(s) containing the JSDoc annotations
+  apis: [__dirname + "/index.js"], // specify the file(s) containing the JSDoc annotations
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
@@ -200,7 +204,7 @@ app.get("/heartbeat", (req, res) => {
  *         description: OK
  */
 app.get("/demo", (req, res) => {
-  res.sendFile(join(import.meta.dirname, "views", "demo.html"));
+  res.sendFile(join(__dirname, "views", "demo.html"));
 });
 
 export default app;
